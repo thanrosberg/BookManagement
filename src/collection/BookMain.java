@@ -55,5 +55,6 @@ public class BookMain{
 		  BookMain book_Main = new BookMain();
 		  book_Main.option();
 		  System.out.println("Hello Than Rosberg");
+		  System.out.println("Chang 2 time");
 	}
 }
