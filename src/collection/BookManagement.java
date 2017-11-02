@@ -4,32 +4,33 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class BookManagement {
-	public String action = "";
+	public int action_Update;
 	ArrayList<Book> book_List = new ArrayList<>();
 	Scanner keyboard = new Scanner(System.in);
 
 	// Enters Book's information
 	public void inputBook(Book input_Book) {
-		
-		if (action != "u") {
-			System.out.print("Enter Id: ");
-			String id = keyboard.nextLine();
-			input_Book.setId(id);
-		}
-		
+		System.out.print("Enter Id: ");
+		String id = keyboard.nextLine();
+
 		System.out.print("Enter Name: ");
 		String name = keyboard.nextLine();
 		input_Book.setName(name);
+		input_Book.setId(id);
+
+		System.out.print("Enter Price: ");
+		int price = Integer.parseInt(keyboard.nextLine().trim());
+		input_Book.setPrice(price);
 	}
 
 	public String outputBook(Book out_Book) {
-		return "[ID = " + out_Book.getId() + ", Name = " + out_Book.getName() + "]";
+		return "[ID = " + out_Book.getId() + ", Name = " + out_Book.getName() + ", Price = " + out_Book.getPrice()
+				+ "]";
 	}
 
 	// Add Book's information into book list
 	public void addBook() {
 		Book add_Book = new Book();
-		action = "a";
 		inputBook(add_Book);
 		book_List.add(add_Book);
 	}
@@ -98,26 +99,19 @@ public class BookManagement {
 			findBookById(name_Again);
 		}
 	}
-	
-	public void inputUpdateBookById(Book update_Book_Id) {
-		System.out.print("Enter Name: ");
-		String name_Update = keyboard.nextLine();
-		update_Book_Id.setName(name_Update);
-	}
 
 	// Edit book by ID
 	public void editBookById(String id) {
+		BookHelper object_Book_Helper = new BookHelper();
 		int count_Edit_ID = 0;
 		for (Book book_Edit_Id : book_List) {
 			if (book_Edit_Id.getId().equalsIgnoreCase(id)) {
 				for (Book book_Id : book_List) {
 					if (book_Id.getId().equalsIgnoreCase(id)) {
-						action = "u";
-						inputBook(book_Id);
+						object_Book_Helper.option_Update(book_Id);
 						count_Edit_ID++;
 						System.out.println("******Book information after edit*******");
-						System.out.println(outputBook(book_Edit_Id));
-						
+						System.out.println(outputBook(book_Id));
 					}
 				}
 				break;
@@ -128,8 +122,73 @@ public class BookManagement {
 			System.out.println("Not found book id. Pease try again!");
 			System.out.print("Enter ID need edit: ");
 			String id_Edit_Again = keyboard.nextLine();
-			findBookById(id_Edit_Again);
+			editBookById(id_Edit_Again);
 		}
 	}
 
+	// Edit book by Name
+	public void editBookByName(String name) {
+		BookHelper object_Book_Helper = new BookHelper();
+		int count_Edit_Name = 0;
+		for (Book book_Edit_Name : book_List) {
+			if (book_Edit_Name.getName().equalsIgnoreCase(name)) {
+				for (Book book_Name : book_List) {
+					if (book_Name.getName().equalsIgnoreCase(name)) {
+						object_Book_Helper.option_Update(book_Name);
+						count_Edit_Name++;
+						System.out.println("******Book information after edit*******");
+						System.out.println(outputBook(book_Edit_Name));
+						break;
+					}
+				}
+				break;
+			}
+		}
+
+		if (count_Edit_Name == 0) {
+			System.out.println("Not found book id. Pease try again!");
+			System.out.print("Enter ID need edit: ");
+			String name_Edit_Again = keyboard.nextLine();
+			findBookById(name_Edit_Again);
+		}
+	}
+
+	/*
+	 * ListIterator<Order> it = orders.listIterator();
+	 * 
+	 * while ( it.hasNext() ) { Order ord = it.next();
+	 * 
+	 * if ( ) // some condition it.remove();
+	 */
+
+	// Remove book by ID
+	public void removeBookById(String id) {
+		int count_Remove_ID = 0;
+		book_List.forEach((bookId) -> {
+			if (bookId.getId().equalsIgnoreCase(id))
+			book_List.remove(bookId);
+			return;
+		});
+		/*for (Book book_Remove_Id : book_List) {
+			if (book_Remove_Id.getId().equalsIgnoreCase(id)) {
+				for (Book book_Id : book_List) {
+					if (book_Id.getId().equalsIgnoreCase(id)) {
+						book_List.remove(book_Id);
+						count_Remove_ID++;
+					}
+				}
+				
+				
+			}
+		}*/
+		System.out.println("******Book information after remove*******");
+		displayAllOfBook();
+
+		if (count_Remove_ID == 0) {
+			System.out.println("Not found book id. Pease try again!");
+			System.out.print("Enter ID need remove: ");
+			String id_Remove_Again = keyboard.nextLine();
+			removeBookById(id_Remove_Again);
+		}
+	}
 }
