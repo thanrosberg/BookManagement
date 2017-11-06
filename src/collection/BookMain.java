@@ -18,10 +18,11 @@ public class BookMain {
 			System.out.println("5. Edit book by ID        ");
 			System.out.println("6. Edit book by Name      ");
 			System.out.println("7. Remove book by ID      ");
-			System.out.println("8. Remove book by ID      ");
+			System.out.println("8. Remove book by Name    ");
 			System.out.println("9. Find book by max_Price ");
 			System.out.println("10. Find book by min_Price ");
-			System.out.println("11. Exit ");
+			System.out.println("11. Sort book by ID from A - Z");
+			System.out.println("12. Exit ");
 			System.out.println("==========================");
 			System.out.print("Enter your option: ");
 			menu = keyboard.nextLine();
@@ -67,14 +68,23 @@ public class BookMain {
 			case "8":
 				System.out.print("Enter Name need Remove: ");
 				String name_Remove = keyboard.nextLine();
-				book_Management.removeBookById(name_Remove);
+				book_Management.removeBookByName(name_Remove);
 				break;
 
 			case "9":
 				book_Management.displayBookMaxPrice();
 				break;
-
+				
 			case "10":
+				book_Management.displayBookMinPrice();
+				break;
+				
+				
+			case "11":
+				book_Management.sortBookIdAtoZ();
+				break;
+
+			case "12":
 				System.out.println("Good bye!");
 				break;
 			}
