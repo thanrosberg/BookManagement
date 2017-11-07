@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-public class BookManagement implements Comparator<Book>{
+public class BookManagement {
 	public int action_Update;
 	ArrayList<Book> book_List = new ArrayList<>();
 	Scanner keyboard = new Scanner(System.in);
@@ -157,35 +159,26 @@ public class BookManagement implements Comparator<Book>{
 
 	// Remove book by ID
 	public void removeBookById(String id) {
-		/* THIS is 1 WAY:
-		int count_Remove_ID = 0;
-		for (Book book_Remove_Id : book_List) {
-			if (book_Remove_Id.getId().equalsIgnoreCase(id)) {
-				for (Book book_Id : book_List) {
-					if (book_Id.getId().equalsIgnoreCase(id)) {
-						count_Remove_ID++;
-					}
-				}
+		/*
+		 * THIS is 1 WAY: int count_Remove_ID = 0; for (Book book_Remove_Id : book_List)
+		 * { if (book_Remove_Id.getId().equalsIgnoreCase(id)) { for (Book book_Id :
+		 * book_List) { if (book_Id.getId().equalsIgnoreCase(id)) { count_Remove_ID++; }
+		 * }
+		 * 
+		 * book_List.remove(book_Remove_Id); } } if (count_Remove_ID == 0) {
+		 * System.out.println("Not found book ID. Pease try again!");
+		 * System.out.print("Enter ID need remove: "); String id_Remove_Again =
+		 * keyboard.nextLine(); removeBookById(id_Remove_Again); }
+		 */
 
-				book_List.remove(book_Remove_Id);
-			}
-		}
-		if (count_Remove_ID == 0) {
-			System.out.println("Not found book ID. Pease try again!");
-			System.out.print("Enter ID need remove: ");
-			String id_Remove_Again = keyboard.nextLine();
-			removeBookById(id_Remove_Again);
-		}
-		*/
-		
-		//Note: If uses 1 way to remove then have exception Current...Exception
-		
-		//THIS is 2 WAY
+		// Note: If uses 1 way to remove then have exception Current...Exception
+
+		// THIS is 2 WAY
 		if (book_List.removeIf(book_Id_Remove -> book_Id_Remove.getId().equalsIgnoreCase(id))) {
 			System.out.println("Book has ID " + id + " is removed succesfull");
 			System.out.println("******Book information after remove*******");
 			displayAllOfBook();
-		}else{
+		} else {
 			System.out.println("Not found book ID. Pease try again!");
 			System.out.print("Enter ID need remove: ");
 			String id_Remove_Again = keyboard.nextLine();
@@ -195,38 +188,32 @@ public class BookManagement implements Comparator<Book>{
 
 	// Remove book by Name
 	public void removeBookByName(String name) {
-		//THIS is 1 way
-		/*int count_Remove_Name = 0;
-		
-		for (Book book_Remove_Name : book_List) { 
-			if (book_Remove_Name.getName().equalsIgnoreCase(name)) {
-				for (Book book_Name : book_List) { 
-					if (book_Name.getName().equalsIgnoreCase(name)) {
-						book_List.remove(book_Name);
-						count_Remove_Name++;
-					}
-				}
-			}
-		}
-		
-		System.out.println("******Book information after remove*******");
-		displayAllOfBook();
+		// THIS is 1 way
+		/*
+		 * int count_Remove_Name = 0;
+		 * 
+		 * for (Book book_Remove_Name : book_List) { if
+		 * (book_Remove_Name.getName().equalsIgnoreCase(name)) { for (Book book_Name :
+		 * book_List) { if (book_Name.getName().equalsIgnoreCase(name)) {
+		 * book_List.remove(book_Name); count_Remove_Name++; } } } }
+		 * 
+		 * System.out.println("******Book information after remove*******");
+		 * displayAllOfBook();
+		 * 
+		 * if (count_Remove_Name == 0) {
+		 * System.out.println("Not found book Name. Pease try again!");
+		 * System.out.print("Enter Name need remove: "); String name_Remove_Again =
+		 * keyboard.nextLine(); removeBookByName(name_Remove_Again); }
+		 */
 
-		if (count_Remove_Name == 0) {
-			System.out.println("Not found book Name. Pease try again!");
-			System.out.print("Enter Name need remove: ");
-			String name_Remove_Again = keyboard.nextLine();
-			removeBookByName(name_Remove_Again);
-		}*/
-		
-		//Note: If uses 1 way to remove then have exception Current...Exception
-		
-		//THIS is 2 WAY
+		// Note: If uses 1 way to remove then have exception Current...Exception
+
+		// THIS is 2 WAY
 		if (book_List.removeIf(book_Name_Remove -> book_Name_Remove.getName().equalsIgnoreCase(name))) {
 			System.out.println("Book has Name " + name + " is removed succesfull");
 			System.out.println("******Book information after remove*******");
 			displayAllOfBook();
-		}else{
+		} else {
 			System.out.println("Not found book Name. Pease try again!");
 			System.out.print("Enter Name need remove: ");
 			String name_Remove_Again = keyboard.nextLine();
@@ -236,10 +223,11 @@ public class BookManagement implements Comparator<Book>{
 
 	// Display Book has maximum Price
 	public void displayBookMaxPrice() {
-		/*THIS is 1 way
-		 * Book max = book_List.get(0); for (int i = 1; i <= book_List.size() - 1; i++)
-		 * { if (max.getPrice() < book_List.get(i).getPrice()) { max = book_List.get(i);
-		 * } } System.out.println(outputBook(max));
+		/*
+		 * THIS is 1 way Book max = book_List.get(0); for (int i = 1; i <=
+		 * book_List.size() - 1; i++) { if (max.getPrice() <
+		 * book_List.get(i).getPrice()) { max = book_List.get(i); } }
+		 * System.out.println(outputBook(max));
 		 */
 
 		// THIS 2 WAY: Using Lamda Expression
@@ -249,33 +237,77 @@ public class BookManagement implements Comparator<Book>{
 
 	// Display Book has minimum Price
 	public void displayBookMinPrice() {
-		/*THIS is 2 way
-		 * Book min = book_List.get(0); for (int i = 1; i <= book_List.size() - 1; i++)
-		 * { if (min.getPrice() > book_List.get(i).getPrice()) { min = book_List.get(i);
-		 * } } System.out.println(outputBook(min));
+		/*
+		 * THIS is 2 way Book min = book_List.get(0); for (int i = 1; i <=
+		 * book_List.size() - 1; i++) { if (min.getPrice() >
+		 * book_List.get(i).getPrice()) { min = book_List.get(i); } }
+		 * System.out.println(outputBook(min));
 		 */
 
 		// THIS 2 WAY: Using Lamda Expression
 		book_List.sort((a, b) -> b.getPrice() - a.getPrice());
 		System.out.println(outputBook(book_List.get(book_List.size() - 1)));
 	}
-	
-	//Display book by sort ID A - Z
-	public void sortBookIdAtoZ() {
-		Collections.sort(book_List, new Comparator<Book>() {
-			@Override
-			public int compare(Book o1, Book o2) {
-				// TODO Auto-generated method stub
-				return 0;
-			}
-		});
-	}
-//
-//	//lambda
-//	listDevs.sort((Developer o1, Developer o2)->o1.getName().compareTo(o2.getName()));
-//
-//	//lambda
-//	listDevs.sort((o1, o2)->o1.getName().compareTo(o2.getName()));
 
-	
+	// Display book by sort ID A - Z
+	public void sortBookIdAtoZ() {
+		int book_Numerical_Id_AZ = 0;
+		book_List.sort((book_ID_AZ1, book_ID_AZ2) -> book_ID_AZ1.getId().compareTo(book_ID_AZ2.getId()));
+		for (Book book_Sort_ID_AZ : book_List) {
+			System.out.println("Book " + ++book_Numerical_Id_AZ + ": " + outputBook(book_Sort_ID_AZ));
+		}
+		System.out.println("Total book in list is: " + book_List.size());
+	}
+
+	// Display book by sort ID Z - A
+	public void sortBookIdZtoA() {
+		int book_Numerical_Id_ZA = 0;
+		book_List.sort((book_ID_ZA1, book_ID_ZA2) -> book_ID_ZA2.getId().compareTo(book_ID_ZA1.getId()));
+		for (Book book_Sort_ID_AZ : book_List) {
+			System.out.println("Book " + ++book_Numerical_Id_ZA + ": " + outputBook(book_Sort_ID_AZ));
+		}
+		System.out.println("Total book in list is: " + book_List.size());
+	}
+
+	// Display book by sort ID A - Z
+	public void sortBookNameAtoZ() {
+		int book_Numerical_Name_AZ = 0;
+		book_List.sort((book_Name_AZ1, book_Name_AZ2) -> book_Name_AZ1.getName().compareTo(book_Name_AZ2.getName()));
+		for (Book book_Sort_Name_AZ : book_List) {
+			System.out.println("Book " + ++book_Numerical_Name_AZ + ": " + outputBook(book_Sort_Name_AZ));
+		}
+		System.out.println("Total book in list is: " + book_List.size());
+	}
+
+	// Display book by sort ID Z - A
+	public void sortBookNameZtoA() {
+		int book_Numerical_Name_ZA = 0;
+		book_List.sort((book_Name_AZ1, book_Name_AZ2) -> book_Name_AZ2.getName().compareTo(book_Name_AZ1.getName()));
+		for (Book book_Sort_Name_ZA : book_List) {
+			System.out.println("Book " + ++book_Numerical_Name_ZA + ": " + outputBook(book_Sort_Name_ZA));
+		}
+		System.out.println("Total book in list is: " + book_List.size());
+	}
+
+	// Display book by sort Price Low - High
+	public void sortBookPriceLowToHigh() {
+		int book_Numerical_Price_LH = 0;
+		Collections.sort(book_List,
+				(book_Price_LH1, book_Price_LH2) -> (book_Price_LH1.getPrice() - book_Price_LH2.getPrice()));
+		for (Book book_Sort_Price_LH : book_List) {
+			System.out.println("Book " + ++book_Numerical_Price_LH + ": " + outputBook(book_Sort_Price_LH));
+		}
+		System.out.println("Total book in list is: " + book_List.size());
+	}
+
+	// Display book by sort Price High - Low
+	public void sortBookPriceHighToLow() {
+		int book_Numerical_Price_HL = 0;
+		Collections.sort(book_List,
+				(book_Price_HL1, book_Price_HL2) -> (book_Price_HL2.getPrice() - book_Price_HL1.getPrice()));
+		for (Book book_Sort_Price_HL : book_List) {
+			System.out.println("Book " + ++book_Numerical_Price_HL + ": " + outputBook(book_Sort_Price_HL));
+		}
+		System.out.println("Total book in list is: " + book_List.size());
+	}
 }

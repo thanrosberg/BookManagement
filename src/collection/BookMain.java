@@ -10,20 +10,17 @@ public class BookMain {
 		String menu = "";
 
 		while (true) {
-			System.out.println("===========MENU===========");
-			System.out.println("1. Display all of book    ");
-			System.out.println("2. Add book               ");
-			System.out.println("3. Find book by ID        ");
-			System.out.println("4. Find book by Name      ");
-			System.out.println("5. Edit book by ID        ");
-			System.out.println("6. Edit book by Name      ");
-			System.out.println("7. Remove book by ID      ");
-			System.out.println("8. Remove book by Name    ");
-			System.out.println("9. Find book by max_Price ");
-			System.out.println("10. Find book by min_Price ");
-			System.out.println("11. Sort book by ID from A - Z");
-			System.out.println("12. Exit ");
-			System.out.println("==========================");
+			System.out.println("===============================MENU================================");
+			System.out.println("1. Display all of book      9. Find book by max_Price ");
+			System.out.println("2. Add book                 10. Find book by min_Price ");
+			System.out.println("3. Find book by ID          11. Sort book by ID from A - Z ");
+			System.out.println("4. Find book by Name        12. Sort book by ID from Z - A ");
+			System.out.println("5. Edit book by ID          13. Sort book by Name from A - Z ");
+			System.out.println("6. Edit book by Name        14. Sort book by Name from Z - A ");
+			System.out.println("7. Remove book by ID        15. Sort book by Price from Low - High ");
+			System.out.println("8. Remove book by Name      16. Sort book by Price from High - Low ");
+			System.out.println("0. Exit ");
+			System.out.println("===================================================================");
 			System.out.print("Enter your option: ");
 			menu = keyboard.nextLine();
 			switch (menu) {
@@ -79,14 +76,33 @@ public class BookMain {
 				book_Management.displayBookMinPrice();
 				break;
 				
-				
 			case "11":
 				book_Management.sortBookIdAtoZ();
 				break;
 
 			case "12":
-				System.out.println("Good bye!");
+				book_Management.sortBookIdZtoA();
 				break;
+				
+			case "13":
+				book_Management.sortBookNameAtoZ();
+				break;
+
+			case "14":
+				book_Management.sortBookNameZtoA();
+				break;
+				
+			case "15":
+				book_Management.sortBookPriceLowToHigh();
+				break;
+
+			case "16":
+				book_Management.sortBookPriceHighToLow();
+				break;
+				
+			case "0":
+				System.out.println("Good bye!");
+				return;
 			}
 		}
 	}
