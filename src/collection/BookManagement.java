@@ -1,13 +1,11 @@
 package collection;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Scanner;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-public class BookManagement {
+public class BookManagement{
 	public int action_Update;
 	ArrayList<Book> book_List = new ArrayList<>();
 	Scanner keyboard = new Scanner(System.in);
@@ -28,8 +26,7 @@ public class BookManagement {
 	}
 
 	public String outputBook(Book out_Book) {
-		return "[ID = " + out_Book.getId() + ", Name = " + out_Book.getName() + ", Price = " + out_Book.getPrice()
-				+ "]";
+		return "[ID = " + out_Book.getId() + ", Name = " + out_Book.getName() + ", Price = " + out_Book.getPrice() + "]";
 	}
 
 	// Add Book's information into book list
@@ -43,8 +40,8 @@ public class BookManagement {
 	public void displayAllOfBook() {
 		int book_Numerical = 0;
 		if (!book_List.isEmpty()) {
-			for (Book out_Book : book_List) {
-				System.out.println("Book " + ++book_Numerical + ": " + outputBook(out_Book));
+			for (Book display_Book : book_List) {
+				System.out.println("Book " + ++book_Numerical + ": " + outputBook(display_Book));
 			}
 		} else {
 			System.out.println("Not found book. Please add book!");
@@ -309,5 +306,39 @@ public class BookManagement {
 			System.out.println("Book " + ++book_Numerical_Price_HL + ": " + outputBook(book_Sort_Price_HL));
 		}
 		System.out.println("Total book in list is: " + book_List.size());
+	}
+
+	// Write book.txt file
+	String fileName = "book.txt";
+
+	public void writeBookFile() {
+		try {
+			FileOutputStream  fos = new FileOutputStream(fileName);
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(book_List);
+			fos.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) { // TODO Auto-generated catch block 
+			e.printStackTrace(); 
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void readBookFile() {
+		try {
+			FileInputStream fis = new FileInputStream(fileName);
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			book_List =  (ArrayList<Book>) ois.readObject();
+			ois.close();
+			fis.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) { // TODO Auto-generated catch block 
+			e.printStackTrace(); 
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
