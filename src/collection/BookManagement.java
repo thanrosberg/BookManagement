@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
-public class BookManagement{
+public class BookManagement {
 	public int action_Update;
 	ArrayList<Book> book_List = new ArrayList<>();
 	Scanner keyboard = new Scanner(System.in);
@@ -26,7 +26,8 @@ public class BookManagement{
 	}
 
 	public String outputBook(Book out_Book) {
-		return "[ID = " + out_Book.getId() + ", Name = " + out_Book.getName() + ", Price = " + out_Book.getPrice() + "]";
+		return "[ID = " + out_Book.getId() + ", Name = " + out_Book.getName() + ", Price = " + out_Book.getPrice()
+				+ "]";
 	}
 
 	// Add Book's information into book list
@@ -220,40 +221,65 @@ public class BookManagement{
 
 	// Display Book has maximum Price
 	public void displayBookMaxPrice() {
-		/*
-		 * THIS is 1 way Book max = book_List.get(0); for (int i = 1; i <=
-		 * book_List.size() - 1; i++) { if (max.getPrice() <
-		 * book_List.get(i).getPrice()) { max = book_List.get(i); } }
-		 * System.out.println(outputBook(max));
-		 */
-
-		// THIS 2 WAY: Using Lamda Expression
-		book_List.sort((a, b) -> a.getPrice() - b.getPrice());
-		System.out.println(outputBook(book_List.get(book_List.size() - 1)));
+		int book_Numerical_Max_Price = 0;
+		int count_Book_Max_Price = 0;
+		// THIS is 1 way
+		Book max_Price = book_List.get(0);
+		for (int i = 1; i <= book_List.size() - 1; i++) {
+			if (max_Price.getPrice() <= book_List.get(i).getPrice()) {
+				max_Price = book_List.get(i);
+				System.out.println("Book " + ++book_Numerical_Max_Price + ": " + outputBook(max_Price));
+				count_Book_Max_Price++;
+			}
+		}
+		System.out.println("Total book in list is: " + count_Book_Max_Price);
+		
+		
+		// THIS 2 WAY: Using Lamda Expression. However, this method get only one element
+		 	/*book_List.sort((a, b) -> a.getPrice() - b.getPrice());
+		  	System.out.println("Book " + ++book_Numerical_Max_Price + ": " + outputBook(book_List.get(i)));*/
 	}
 
-	// Display Book has minimum Price
+	// Display Book has minimum Price. Still not finish
 	public void displayBookMinPrice() {
-		/*
-		 * THIS is 2 way Book min = book_List.get(0); for (int i = 1; i <=
-		 * book_List.size() - 1; i++) { if (min.getPrice() >
-		 * book_List.get(i).getPrice()) { min = book_List.get(i); } }
-		 * System.out.println(outputBook(min));
-		 */
+		int book_Numerical_Min_Price = 0;
+		int count_Book_Min_Price = 0;
+		// THIS is 1 way
+		Book min_Price = book_List.get(0);
+		for (int i = 0; i <= book_List.size() - 1; i++) {
+			if (min_Price.getPrice() >= book_List.get(i).getPrice()) {
+				min_Price = book_List.get(i);
+				System.out.println("Book " + ++book_Numerical_Min_Price + ": " + outputBook(min_Price));
+				count_Book_Min_Price++;
+			}
+		}
+		System.out.println("Total book in list is: " + count_Book_Min_Price);
 
-		// THIS 2 WAY: Using Lamda Expression
-		book_List.sort((a, b) -> b.getPrice() - a.getPrice());
-		System.out.println(outputBook(book_List.get(book_List.size() - 1)));
+		// THIS 2 WAY: Using Lamda Expression. However, this method get only one element
+		/*book_List.sort((a, b) -> b.getPrice() - a.getPrice());
+		System.out.println("Book " + ++book_Numerical_Min_Price + ": " + outputBook(book_List.get(book_List.size() - 1)));*/
+	}
+
+	// Display book has middle Prices between min price and max price
+	public void displayBookMiddlePrice() {
+		int book_Numerical_Middle_Price = 0;
+		book_List.sort((a, b) -> a.getPrice() - b.getPrice());
+		for (int i = 1; i < book_List.size() - 1; i++) {
+			System.out.println("Book " + ++book_Numerical_Middle_Price + ": " + outputBook(book_List.get(i)));
+		}
 	}
 
 	// Display book by sort ID A - Z
 	public void sortBookIdAtoZ() {
 		int book_Numerical_Id_AZ = 0;
+		int count = 0;
 		book_List.sort((book_ID_AZ1, book_ID_AZ2) -> book_ID_AZ1.getId().compareTo(book_ID_AZ2.getId()));
 		for (Book book_Sort_ID_AZ : book_List) {
 			System.out.println("Book " + ++book_Numerical_Id_AZ + ": " + outputBook(book_Sort_ID_AZ));
 		}
-		System.out.println("Total book in list is: " + book_List.size());
+		if (count != book_List.size()) {
+			System.out.println("Total book in list is: " + book_List.get(book_List.size() - count));
+		}
 	}
 
 	// Display book by sort ID Z - A
@@ -313,29 +339,29 @@ public class BookManagement{
 
 	public void writeBookFile() {
 		try {
-			FileOutputStream  fos = new FileOutputStream(fileName);
+			FileOutputStream fos = new FileOutputStream(fileName);
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
 			oos.writeObject(book_List);
 			fos.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-		} catch (IOException e) { // TODO Auto-generated catch block 
-			e.printStackTrace(); 
+		} catch (IOException e) { // TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public void readBookFile() {
 		try {
 			FileInputStream fis = new FileInputStream(fileName);
 			ObjectInputStream ois = new ObjectInputStream(fis);
-			book_List =  (ArrayList<Book>) ois.readObject();
+			book_List = (ArrayList<Book>) ois.readObject();
 			ois.close();
 			fis.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-		} catch (IOException e) { // TODO Auto-generated catch block 
-			e.printStackTrace(); 
+		} catch (IOException e) { // TODO Auto-generated catch block
+			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
