@@ -1,4 +1,4 @@
-package collection;
+package book.management;
 
 import java.util.Scanner;
 
