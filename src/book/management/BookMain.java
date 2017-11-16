@@ -10,6 +10,7 @@ public class BookMain {
 		String menu = "";
 
 		while (true) {
+			System.out.println("Test merge breanch");
 			System.out.println("===============================MENU================================");
 			System.out.println("1. Display all of book          11. Display book by middle_Price ");
 			System.out.println("2. Add book                     12. Sort book by ID from A - Z ");

@@ -12,7 +12,6 @@ public class BookManagement {
 
 	// Enters Book's information
 	public void inputBook(Book input_Book) {
-		System.out.println("TEST GIT COMMAND");
 		System.out.print("Enter Id: ");
 		String id = keyboard.nextLine();
 		input_Book.setId(id);

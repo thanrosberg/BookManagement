@@ -7,7 +7,6 @@ public class Book implements Serializable{
 	private String id;
 	private String name;
 	private int price;
-	private int mark;
 	
 	public Book() {
 		// TODO Auto-generated constructor stub
