@@ -14,11 +14,11 @@ public class BookManagement {
 	public void inputBook(Book input_Book) {
 		System.out.print("Enter Id: ");
 		String id = keyboard.nextLine();
+		input_Book.setId(id);
 
 		System.out.print("Enter Name: ");
 		String name = keyboard.nextLine();
-		input_Book.setName(name);
-		input_Book.setId(id);
+		input_Book.setName(name);		
 
 		System.out.print("Enter Price: ");
 		int price = Integer.parseInt(keyboard.nextLine().trim());
