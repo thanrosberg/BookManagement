@@ -8,6 +8,7 @@ public class BookHelper {
 
 	public void inputBookUpdate(Book input_Book_Update) {
 		if (action_Update != 1 && action_Update != 2 && action_Update != 3) {
+			System.out.print("Test git command: diff --cached");
 			System.out.print("Enter Id: ");
 			String id = keyboard.nextLine();
 			input_Book_Update.setId(id);
